@@ -16,4 +16,6 @@ public class PageInitManager {
     public LoginPage getLoginPage(AndroidDriver driver) {
         return new LoginPage(driver);
     }
+
+    public HomePage getHomePage(AndroidDriver driver) { return new HomePage(driver); }
 }

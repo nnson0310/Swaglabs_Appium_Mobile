@@ -147,11 +147,11 @@ public abstract class BasePage {
         return driver.findElements(getByLocator(getDynamicXpath(locator, dynamicXpath)));
     }
 
-    protected void ClickToElement(AndroidDriver driver, String locator) {
+    protected void clickToElement(AndroidDriver driver, String locator) {
         getElement(driver, locator).click();
     }
 
-    protected void ClickToElement(AndroidDriver driver, String locator, String... dynamicXpath) {
+    protected void clickToElement(AndroidDriver driver, String locator, String... dynamicXpath) {
         getElement(driver, locator, dynamicXpath).click();
     }
 
