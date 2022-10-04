@@ -14,6 +14,7 @@ public class MethodHelper {
     }
 
     public static int getAvailablePort() {
+        // default port for Appium Server
         int port = 4723;
 
         try {

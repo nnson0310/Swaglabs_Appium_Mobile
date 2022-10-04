@@ -1,3 +1,5 @@
+import com.google.common.collect.ImmutableMap;
+import com.google.errorprone.annotations.Immutable;
 import commons.BaseTest;
 import commons.ServerManager;
 import io.appium.java_client.AppiumDriver;
@@ -11,6 +13,7 @@ import org.testng.annotations.Test;
 
 import java.net.MalformedURLException;
 import java.time.Duration;
+import java.util.Collections;
 
 public class Demo extends BaseTest {
 
@@ -36,7 +39,8 @@ public class Demo extends BaseTest {
 
     @Test
     public void Test() {
-        Assert.assertTrue(true);
+        AndroidDriver androidDriver = (AndroidDriver) driver;
+        System.out.println(androidDriver.queryAppState("com.swaglabsmobileapp").name());
     }
 
     @AfterClass(alwaysRun = true)
