@@ -1,6 +1,7 @@
 import com.google.common.collect.ImmutableMap;
 import com.google.errorprone.annotations.Immutable;
 import commons.BaseTest;
+import commons.DriverOptionManager;
 import commons.ServerManager;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
@@ -22,15 +23,7 @@ public class Demo extends BaseTest {
 
     @BeforeClass
     public void SetUp() throws MalformedURLException {
-        UiAutomator2Options options = new UiAutomator2Options();
-        options.setUdid("emulator-5554");
-        options.setPlatformName("Android");
-        options.setAppPackage("com.swaglabsmobileapp");
-        options.setAppActivity("com.swaglabsmobileapp.MainActivity");
-        options.setAutoGrantPermissions(true);
-        options.setNoReset(true);
-        options.setAutomationName("UiAutomator2");
-
+        UiAutomator2Options options = new DriverOptionManager().getOptions();
         server = new ServerManager().getServer();
 
         driver = new AndroidDriver(server, options);
@@ -40,7 +33,6 @@ public class Demo extends BaseTest {
     @Test
     public void Test() {
         AndroidDriver androidDriver = (AndroidDriver) driver;
-        System.out.println(androidDriver.queryAppState("com.swaglabsmobileapp").name());
     }
 
     @AfterClass(alwaysRun = true)
