@@ -5,6 +5,7 @@ import io.appium.java_client.android.Activity;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.*;
 import org.openqa.selenium.html5.Location;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
@@ -188,6 +189,16 @@ public abstract class BasePage {
 
     protected Boolean isElementSelected(AndroidDriver driver, String locator) {
         return getElement(driver, locator).isSelected();
+    }
+
+    protected void waitForElementVisible(AndroidDriver driver, String locator) {
+        explicitWait = new WebDriverWait(driver, Duration.ofSeconds(GlobalConstants.longTimeout));
+        explicitWait.until(ExpectedConditions.visibilityOfElementLocated(getByLocator(locator)));
+    }
+
+    protected void waitForElementClickable(AndroidDriver driver, String locator) {
+        explicitWait = new WebDriverWait(driver, Duration.ofSeconds(GlobalConstants.longTimeout));
+        explicitWait.until(ExpectedConditions.elementToBeClickable(getByLocator(locator)));
     }
 
     protected String getCssValue(AndroidDriver driver, String locator, String cssPropertyName) {

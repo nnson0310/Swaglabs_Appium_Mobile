@@ -3,7 +3,7 @@
 <suite name="Swaglabs">
     <test verbose="2" preserve-order="true" name="Run on Android">
         <classes>
-            <class name="Demo"></class>
+            <class name="Regression_Test_01_Login"></class>
         </classes>
     </test>
 </suite>

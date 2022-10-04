@@ -1,16 +1,26 @@
 package commons;
 
-import org.openqa.selenium.WebDriver;
+import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.android.options.UiAutomator2Options;
+import io.appium.java_client.service.local.AppiumDriverLocalService;
+
+import java.time.Duration;
 
 public class BaseTest {
 
-    private WebDriver driver;
+    private AndroidDriver driver;
 
-    public WebDriver getDriver() {
+    public AndroidDriver getDriver() {
+        UiAutomator2Options options = new DriverOptionManager().getOptions();
+        AppiumDriverLocalService server = new ServerManager().getServer();
+
+        driver = new AndroidDriver(server, options);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(GlobalConstants.longTimeout));
+
         return driver;
     }
 
-    public void closeBrowserAndKillDriver() {
+    public void closeDriver() {
         if (driver != null) {
             driver.quit();
         }
