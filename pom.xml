@@ -49,6 +49,10 @@
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>3.0.0-M7</version>
                     <configuration>
+                        <forkMode>always</forkMode>
+                        <environmentVariables>
+                            <ANDROID_HOME>C:\Users\sonn\AppData\Local\Android\Sdk</ANDROID_HOME>
+                        </environmentVariables>
                         <suiteXmlFiles>
                             <suiteXmlFile>testng.xml</suiteXmlFile>
                         </suiteXmlFiles>
