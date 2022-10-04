@@ -51,7 +51,7 @@
                     <configuration>
                         <reuseForks>true</reuseForks>
                         <environmentVariables>
-                            <ANDROID_HOME>C:\Users\sonn\AppData\Local\Android\Sdk</ANDROID_HOME>
+                            <ANDROID_HOME>C:\Users\son\AppData\Local\Android\Sdk</ANDROID_HOME>
                         </environmentVariables>
                         <suiteXmlFiles>
                             <suiteXmlFile>testng.xml</suiteXmlFile>
