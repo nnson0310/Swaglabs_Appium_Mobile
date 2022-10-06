@@ -18,4 +18,6 @@ buildNumber.properties
 
 .idea/
 src/test/resources/logs/
+test-output/
+extent-report/
 Swaglabs_Appium_Mobile.iml

@@ -1,5 +1,6 @@
-package commons;
+package configurations;
 
+import commons.GlobalConstants;
 import helpers.MethodHelper;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
 import io.appium.java_client.service.local.AppiumServiceBuilder;

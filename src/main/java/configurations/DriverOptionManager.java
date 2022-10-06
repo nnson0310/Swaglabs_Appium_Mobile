@@ -1,4 +1,4 @@
-package commons;
+package configurations;
 
 import helpers.ConfigHelper;
 import io.appium.java_client.android.options.UiAutomator2Options;

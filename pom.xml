@@ -16,6 +16,7 @@
         <appium.version>8.2.0</appium.version>
         <testng.version>7.6.1</testng.version>
         <selenium.version>4.4.0</selenium.version>
+        <extent.version>5.0.9</extent.version>
     </properties>
 
     <dependencies>
@@ -39,6 +40,11 @@
             <artifactId>selenium-java</artifactId>
             <version>${selenium.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.aventstack</groupId>
+            <artifactId>extentreports</artifactId>
+            <version>${extent.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -56,6 +62,7 @@
                         <suiteXmlFiles>
                             <suiteXmlFile>testng.xml</suiteXmlFile>
                         </suiteXmlFiles>
+                        <reportsDirectory>test-output</reportsDirectory>
                     </configuration>
                 </plugin>
             </plugins>
