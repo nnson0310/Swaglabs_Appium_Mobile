@@ -44,11 +44,11 @@ public class Regression_Test_01_Login extends BaseTest {
         homePage = PageInitManager.getInstance().getHomePage(driver);
 
         getTest().log(Status.INFO, methodName + " - Step 04: Verify that 'Products' header is displayed");
-        Assert.assertFalse(homePage.isProductHeaderDisplayed(driver));
+        Assert.assertTrue(homePage.isProductHeaderDisplayed(driver));
     }
 
     @AfterMethod(alwaysRun = true)
     public void tearDown() {
-        closeDriver();
+        closeDriverAndSaveVideo();
     }
 }

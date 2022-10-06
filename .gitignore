@@ -20,4 +20,5 @@ buildNumber.properties
 src/test/resources/logs/
 test-output/
 extent-report/
+record_videos/
 Swaglabs_Appium_Mobile.iml
