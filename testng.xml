@@ -3,6 +3,7 @@
 <suite name="Swaglabs">
     <listeners>
         <listener class-name="listeners.ExtentTestListener"/>
+        <listener class-name="listeners.RecordVideoListener"/>
 <!--        <listener class-name="listeners.AnnotationTransformer"/>-->
     </listeners>
     <test verbose="2" preserve-order="true" name="Run on Android">

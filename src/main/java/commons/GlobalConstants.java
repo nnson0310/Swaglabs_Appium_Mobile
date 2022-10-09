@@ -1,5 +1,8 @@
 package commons;
 
+import helpers.MethodHelper;
+
+import java.io.File;
 import java.nio.file.Paths;
 
 public class GlobalConstants {
@@ -12,5 +15,7 @@ public class GlobalConstants {
 
     public static final String pathToMainResource =  Paths.get("src", "main", "resources").toFile().getAbsolutePath();
     public static final String pathToTestResource = Paths.get("src", "test", "resources").toFile().getAbsolutePath();
+
+    public static final String pathToRecordVideos = projectPath + File.separator + "record_videos";
 
 }

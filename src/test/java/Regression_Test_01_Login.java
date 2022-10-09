@@ -48,7 +48,7 @@ public class Regression_Test_01_Login extends BaseTest {
     }
 
     @AfterMethod(alwaysRun = true)
-    public void tearDown() {
-        closeDriverAndSaveVideo();
+    public void tearDown(Method method) {
+        closeDriver(method.getName());
     }
 }

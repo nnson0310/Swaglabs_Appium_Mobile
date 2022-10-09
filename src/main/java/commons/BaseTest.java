@@ -2,6 +2,7 @@ package commons;
 
 import configurations.DriverOptionManager;
 import configurations.ServerManager;
+import helpers.MethodHelper;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidStartScreenRecordingOptions;
 import io.appium.java_client.android.options.UiAutomator2Options;
@@ -10,10 +11,11 @@ import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.Duration;
 import java.util.Base64;
-
-import static commons.GlobalConstants.projectPath;
 
 public class BaseTest {
 
@@ -25,11 +27,7 @@ public class BaseTest {
 
         driver = new AndroidDriver(server, options);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(GlobalConstants.longTimeout));
-        driver.startRecordingScreen(
-                new AndroidStartScreenRecordingOptions()
-                        .withVideoSize("1280x720")
-                        .withTimeLimit(Duration.ofSeconds(200))
-        );
+        MethodHelper.startRecordVideo(driver);
 
         return driver;
     }
@@ -38,15 +36,9 @@ public class BaseTest {
         return driver;
     }
 
-    public void closeDriverAndSaveVideo() {
+    public void closeDriver(String testName) {
         if (driver != null) {
-            String video = driver.stopRecordingScreen();
-            byte[] decode = Base64.getDecoder().decode(video);
-            try {
-                FileUtils.writeByteArrayToFile(new File(projectPath + File.separator + "record_videos" + File.separator + "android.mp4"), decode);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            MethodHelper.saveRecordVideo(driver, testName);
             driver.quit();
         }
     }
