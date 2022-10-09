@@ -8,7 +8,8 @@
     </listeners>
     <test verbose="2" preserve-order="true" name="Run on Android">
         <classes>
-            <class name="Regression_Test_01_Login"/>
+<!--            <class name="Regression_Test_01_Login"/>-->
+            <class name="Regression_Test_02_Sort_Products"/>
         </classes>
     </test>
 </suite>
