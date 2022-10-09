@@ -5,11 +5,20 @@ import io.appium.java_client.android.Activity;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.*;
 import org.openqa.selenium.html5.Location;
+import org.openqa.selenium.interactions.Pause;
+import org.openqa.selenium.interactions.PointerInput;
+import org.openqa.selenium.interactions.Sequence;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import static org.openqa.selenium.interactions.PointerInput.Kind.TOUCH;
+import static org.openqa.selenium.interactions.PointerInput.MouseButton.LEFT;
+import static org.openqa.selenium.interactions.PointerInput.Origin.viewport;
 
 /**
  * Define all methods of selenium API to interact with browser
@@ -139,6 +148,15 @@ public abstract class BasePage {
         return driver.findElement(getByLocator(getDynamicXpath(locator, dynamicXpath)));
     }
 
+    protected List<String> getTextOfAllElements(AndroidDriver driver, String locator) {
+        List<WebElement> elements = getElements(driver, locator);
+        List<String> elementText = new ArrayList<>();
+        for(WebElement element: elements) {
+            elementText.add(element.getText());
+        }
+        return elementText;
+    }
+
     private List<WebElement> getElements(AndroidDriver driver, String locator) {
         return driver.findElements(getByLocator(locator));
     }
@@ -183,6 +201,10 @@ public abstract class BasePage {
         return getElement(driver, locator).isDisplayed();
     }
 
+    protected Boolean isElementDisplayed(AndroidDriver driver, String locator, String... dynamicValues) {
+        return getElement(driver, getDynamicXpath(locator, dynamicValues)).isDisplayed();
+    }
+
     protected Boolean isElementEnabled(AndroidDriver driver, String locator) {
         return getElement(driver, locator).isEnabled();
     }
@@ -192,13 +214,23 @@ public abstract class BasePage {
     }
 
     protected void waitForElementVisible(AndroidDriver driver, String locator) {
-        explicitWait = new WebDriverWait(driver, Duration.ofSeconds(GlobalConstants.longTimeout));
-        explicitWait.until(ExpectedConditions.visibilityOfElementLocated(getByLocator(locator)));
+        explicitWait = new WebDriverWait(driver, Duration.ofSeconds(longTimeout));
+        explicitWait.until(ExpectedConditions.visibilityOf(getElement(driver, locator)));
+    }
+
+    protected void waitForElementVisible(AndroidDriver driver, String locator, String... dynamicValues) {
+        explicitWait = new WebDriverWait(driver, Duration.ofSeconds(longTimeout));
+        explicitWait.until(ExpectedConditions.visibilityOf(getElement(driver, getDynamicXpath(locator, dynamicValues))));
     }
 
     protected void waitForElementClickable(AndroidDriver driver, String locator) {
-        explicitWait = new WebDriverWait(driver, Duration.ofSeconds(GlobalConstants.longTimeout));
-        explicitWait.until(ExpectedConditions.elementToBeClickable(getByLocator(locator)));
+        explicitWait = new WebDriverWait(driver, Duration.ofSeconds(longTimeout));
+        explicitWait.until(ExpectedConditions.elementToBeClickable(getElement(driver, locator)));
+    }
+
+    protected void waitForElementClickable(AndroidDriver driver, String locator, String... dynamicValues) {
+        explicitWait = new WebDriverWait(driver, Duration.ofSeconds(longTimeout));
+        explicitWait.until(ExpectedConditions.elementToBeClickable(getElement(driver, getDynamicXpath(locator, dynamicValues))));
     }
 
     protected String getCssValue(AndroidDriver driver, String locator, String cssPropertyName) {
@@ -224,5 +256,52 @@ public abstract class BasePage {
     protected String getAppContext(AndroidDriver driver) {
         return driver.getContext();
     }
+
+    // all touch actions definitions
+
+    private final PointerInput FINGER = new PointerInput(TOUCH, "finger");
+    private Dimension screenSize;
+
+    protected Dimension getScreenSize(AndroidDriver driver) {
+        return driver.manage().window().getSize();
+    }
+
+    protected void doSwipe(AndroidDriver driver, Point start, Point end, int duration) {
+        Sequence swipe = new Sequence(FINGER, 1)
+                .addAction(FINGER.createPointerMove(Duration.ofSeconds(0), viewport(), start.getX(), start.getY()))
+                .addAction(FINGER.createPointerDown(LEFT.asArg()))
+                .addAction(FINGER.createPointerMove(Duration.ofSeconds(duration), viewport(), end.getX(), end.getY()))
+                .addAction(FINGER.createPointerUp(LEFT.asArg()));
+        driver.perform(Arrays.asList(swipe));
+    }
+
+    protected void doTap(AndroidDriver driver, Point point, int duration) {
+        Sequence tap = new Sequence(FINGER, 1)
+                .addAction(FINGER.createPointerMove(Duration.ofSeconds(0), viewport(), point.getX(), point.getY()))
+                .addAction(FINGER.createPointerDown(LEFT.asArg()))
+                .addAction(new Pause(FINGER, Duration.ofSeconds(duration)))
+                .addAction(FINGER.createPointerUp(LEFT.asArg()));
+        driver.perform(Arrays.asList(tap));
+    }
+
+    protected void scrollDownToElement(AndroidDriver driver, String locator, int duration) {
+        screenSize = getScreenSize(driver);
+        Point start = new Point((int) (screenSize.width * 0.5), (int) (screenSize.height * 0.9));
+        Point end = getElement(driver, locator).getLocation();
+        do{
+            doSwipe(driver, start, end, 500);
+            if (getElement(driver, locator).isDisplayed()) {
+                break;
+            }
+        }while(true);
+    }
+
+    protected void scrollToBottom(AndroidDriver driver, int duration) {
+        screenSize = getScreenSize(driver);
+        Point start = new Point((int) (screenSize.width * 0.5), (int) (screenSize.height * 0.9));
+        Point end = new Point((int) (screenSize.width * 0.5), (int) (screenSize.height * 0.2));
+        doSwipe(driver, start, end, duration);
+    }
+
 }
 
