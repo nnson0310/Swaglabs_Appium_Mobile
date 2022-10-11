@@ -46,4 +46,20 @@ public class HomePage extends CommonPage {
         }
         return productNames.equals(originProductNames);
     }
+
+    public boolean isProductPriceSortedCorrectly(AndroidDriver driver, String sortCriteria) {
+        List<Integer> productPrices = new ArrayList<>();
+        for(int i = 0 ; i < 2; i++) {
+            productPrices.addAll(getTextNumberOfAllElements(driver, HomePageUI.PRODUCT_PRICE_LABEL));
+            scrollToBottom(driver, 2);
+        }
+        List<Integer> originProductPrices = new ArrayList<>(productPrices);
+        if (sortCriteria.equals("Price (low to high)")) {
+            Collections.sort(productPrices);
+        }
+        else {
+            Collections.sort(productPrices, Collections.reverseOrder());
+        }
+        return productPrices.equals(originProductPrices);
+    }
 }
