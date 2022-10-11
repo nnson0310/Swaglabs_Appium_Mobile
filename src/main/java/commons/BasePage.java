@@ -157,6 +157,15 @@ public abstract class BasePage {
         return elementText;
     }
 
+    protected List<Integer> getTextNumberOfAllElements(AndroidDriver driver, String locator) {
+        List<WebElement> elements = getElements(driver, locator);
+        List<Integer> elementText = new ArrayList<>();
+        for(WebElement element: elements) {
+            elementText.add(Integer.parseInt(element.getText().replaceAll("[^0-9]", "")));
+        }
+        return elementText;
+    }
+
     private List<WebElement> getElements(AndroidDriver driver, String locator) {
         return driver.findElements(getByLocator(locator));
     }
