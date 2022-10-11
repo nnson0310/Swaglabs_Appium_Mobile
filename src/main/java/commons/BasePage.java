@@ -288,8 +288,9 @@ public abstract class BasePage {
         screenSize = getScreenSize(driver);
         Point start = new Point((int) (screenSize.width * 0.5), (int) (screenSize.height * 0.9));
         Point end = getElement(driver, locator).getLocation();
+        System.out.println(getElement(driver, locator).isDisplayed());
         do{
-            doSwipe(driver, start, end, 500);
+            doSwipe(driver, start, end, duration);
             if (getElement(driver, locator).isDisplayed()) {
                 break;
             }
