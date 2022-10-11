@@ -1,8 +1,12 @@
 package page_objects;
 
+import io.appium.java_client.AppiumBy;
 import io.appium.java_client.android.AndroidDriver;
+import page_interfaces.CommonPageUI;
 import page_interfaces.HomePageUI;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class HomePage extends CommonPage {
@@ -27,11 +31,19 @@ public class HomePage extends CommonPage {
         clickToElement(driver, HomePageUI.SORT_CRITERIA_BUTTON, sortCriteria);
     }
 
-    public boolean isProductNameSortedCorrectly(AndroidDriver driver) {
-        List<String> productNames = getTextOfAllElements(driver, HomePageUI.PRODUCT_NAME_LABEL);
-        for(String productName : productNames) {
-            System.out.println(productName);
+    public boolean isProductNameSortedCorrectly(AndroidDriver driver, String sortCriteria) {
+        List<String> productNames = new ArrayList<>();
+        for(int i = 0 ; i < 2; i++) {
+            productNames.addAll(getTextOfAllElements(driver, HomePageUI.PRODUCT_NAME_LABEL));
+            scrollToBottom(driver, 2);
         }
-        return true;
+        List<String> originProductNames = new ArrayList<>(productNames);
+        if (sortCriteria.equals("Name (A to Z)")) {
+            Collections.sort(productNames);
+        }
+        else {
+            Collections.sort(productNames, Collections.reverseOrder());
+        }
+        return productNames.equals(originProductNames);
     }
 }
