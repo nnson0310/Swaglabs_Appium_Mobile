@@ -9,15 +9,14 @@ import java.io.File;
 
 public class ServerManager {
 
-    private final AppiumServiceBuilder serviceBuilder = new AppiumServiceBuilder();
-    private AppiumDriverLocalService server;
-    private int port;
+    private final AppiumDriverLocalService server;
 
     public ServerManager() {
-        this.port = MethodHelper.getAvailablePort();
-        this.serviceBuilder.usingPort(port);
-        this.serviceBuilder.withLogFile(new File(GlobalConstants.pathToTestResource + File.separator + "logs" + File.separator + "server.logs"));
-        this.serviceBuilder.withArgument(GeneralServerFlag.BASEPATH, "/wd/hub/");
+        int port = MethodHelper.getAvailablePort();
+        AppiumServiceBuilder serviceBuilder = new AppiumServiceBuilder();
+        serviceBuilder.usingPort(port);
+        serviceBuilder.withLogFile(new File(GlobalConstants.pathToTestResource + File.separator + "logs" + File.separator + "server.logs"));
+        serviceBuilder.withArgument(GeneralServerFlag.BASEPATH, "/wd/hub/");
         this.server = AppiumDriverLocalService.buildService(serviceBuilder);
 
         this.server.start();
@@ -26,9 +25,5 @@ public class ServerManager {
 
     public AppiumDriverLocalService getServer() {
         return this.server;
-    }
-
-    public void stopServer() {
-        this.server.stop();
     }
 }
