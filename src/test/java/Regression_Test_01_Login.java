@@ -26,7 +26,6 @@ public class Regression_Test_01_Login extends BaseTest {
     @BeforeMethod
     public void SetUp() {
         driver = initDriver();
-
         loginPage = PageInitManager.getInstance().getLoginPage(driver);
     }
 

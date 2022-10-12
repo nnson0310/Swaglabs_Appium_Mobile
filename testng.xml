@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Swaglabs">
+<suite name="Swaglabs" parallel="false">
     <listeners>
         <listener class-name="listeners.ExtentTestListener"/>
         <listener class-name="listeners.RecordVideoListener"/>
 <!--        <listener class-name="listeners.AnnotationTransformer"/>-->
     </listeners>
-    <test verbose="2" preserve-order="true" name="Run on Android">
+    <test verbose="2" preserve-order="true" name="Run on Android2">
         <classes>
-<!--            <class name="Regression_Test_01_Login"/>-->
+            <class name="Regression_Test_01_Login"/>
             <class name="Regression_Test_02_Sort_Products"/>
         </classes>
     </test>
